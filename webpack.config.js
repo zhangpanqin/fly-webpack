@@ -15,22 +15,35 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[hash].js'
-    }, plugins: [
-        new HtmlWebpackPlugin({ template: './public/index.html', chunks: ["runtime", "vendors", "index", "login", "login2"] }),
-        new CleanWebpackPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        // chunks hash
-        new webpack.HashedModuleIdsPlugin(),
-    ],
+    },
+    resolve: {
+        // 自动解析扩展类型
+        extensions: ['.wasm', '.mjs', '.js', '.json'],
+        // 解析的模块路径
+        modules: [path.resolve(__dirname, "src"), "node_modules"],
+        // 配置路径别名，绝对路径
+        alias: {
+            "@": path.resolve(__dirname, 'src'),
+            "#": path.resolve(__dirname, 'public'),
+        }
+    },
     module: {
+        /**
+    * test: 匹配特定条件。一般是提供一个正则表达式或正则表达式的数组
+    * include: 匹配特定条件。一般是提供一个字符串或者字符串数组
+    * exclude: 排除特定条件
+    * and: 必须匹配数组中的所有条件
+    * or: 匹配数组中任何一个条件,
+    * nor: 必须排除这个条件
+    */
         rules: [
             {
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src'),
                 exclude: /(node_modules|bower_components)/,
-                // use: {
-                //     loader: 'babel-loader',
-                // }
+                use: {
+                    loader: 'babel-loader',
+                }
             }
         ]
     },
@@ -41,21 +54,41 @@ const config = {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
-                    chunks: 'all'
+                    chunks: 'initial',
+                    // 设置优先级，防止和自定义的公共代码提取时被覆盖，不进行打包
+                    priority: 10
                 }
             }
         }
     },
-    resolve: {
-        extensions: ['.wasm', '.mjs', '.js', '.json'],
-        modules: ["src", "public", 'node_modules'],
-        alias: {
-            "@": path.resolve(__dirname, 'src'),
-            "#": path.resolve(__dirname, 'public'),
-        }
-    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            // 配置输出文件名和路径
+            filename: "index.html",
+            // 配置要被编译的html文件
+            template: './public/index.html',
+            minify: {
+                // 删除双引号
+                removeAttributeQuotes: true,
+                // 折叠 html 为一行
+                collapseWhitespace: true
+            },
+            hash: true,
+            chunks: ["runtime", "vendors", "index", "login", "login2"]
+        }),
+        new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        // chunks hash
+        new webpack.HashedModuleIdsPlugin(),
+    ],
     devServer: {
-        contentBase: './dist',
+        contentBase: path.resolve(__dirname, 'dist'),
+        // port: 1234,
+        // 自动打开浏览器
+        open: true,
+        // 服务器压缩
+        compress: true,
+        // 热加载，配合 new webpack.HotModuleReplacementPlugin(),
         hot: true
     },
 };
@@ -67,7 +100,7 @@ module.exports = (env, argv) => {
     }
 
     if (argv.mode === 'production') {
-
+        config.devtool = 'none';
     }
     console.log(argv.mode);
 

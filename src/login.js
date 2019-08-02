@@ -1,5 +1,6 @@
 // import "@babel/polyfill";
 import _ from "lodash";
+import Util from '#/util';
 function component () {
     var element = document.createElement("div");
 
@@ -8,7 +9,7 @@ function component () {
 
     return element;
 }
-
+Util.login();
 document.body.appendChild(component());
 
 class Demo {

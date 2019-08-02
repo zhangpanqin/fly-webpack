@@ -21,9 +21,9 @@ module.exports = function (api) {
             {
                 // chrome, edge, firefox, safari, ie, ios, node,Android
                 targets: {
-                    ie: "8",
-                    chrome: "67",
-                    "browsers": ["> 1%", "last 2 versions", " ie>=8", "Android >= 4.0", "ios >= 7"]
+                    // ie: "9",
+                    // chrome: "67",
+                    "browsers": ["> 1%", "last 2 versions", " ie>8"]
                 },
                 // 是否输出启用的plugins列表
                 debug: true,

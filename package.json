@@ -6,10 +6,11 @@
     "private": true,
     "scripts": {
         "build": "webpack --mode production --progress --display-modules --colors --display-reasons",
-        "start": "webpack-dev-server --mode development --open"
+        "start": "webpack-dev-server --mode development"
     },
     "dependencies": {
         "@babel/runtime": "^7.5.5",
+        "@babel/runtime-corejs3": "^7.5.5",
         "core-js": "3",
         "lodash": "^4.17.15"
     },
