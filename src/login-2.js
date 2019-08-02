@@ -1,6 +1,6 @@
 // import "@babel/polyfill";
 import _ from "lodash";
-import Demo from "login";
+import Demo from "@/login";
 function component () {
     var element = document.createElement("div");
 
