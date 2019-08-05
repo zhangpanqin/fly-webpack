@@ -1,4 +1,10 @@
 import _ from "lodash";
+import "@/assets/css/index.css"
+import "@/assets/sass/index.scss"
+// import "@/assets/iconfont/mobirise/style.css";
+import testImage from "@/assets/images/test.png";
+import { add } from "@/util";
+add(1, 2)
 function component1 () {
     var element = document.createElement("div");
 
@@ -8,6 +14,10 @@ function component1 () {
 
     return element;
 }
+
+const img = document.createElement('img');
+img.src = testImage;
+document.body.appendChild(img);
 document.body.appendChild(component1());
 
 class Demo {

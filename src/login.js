@@ -1,6 +1,4 @@
-// import "@babel/polyfill";
 import _ from "lodash";
-import Util from '#/util';
 function component () {
     var element = document.createElement("div");
 
@@ -9,7 +7,6 @@ function component () {
 
     return element;
 }
-Util.login();
 document.body.appendChild(component());
 
 class Demo {
@@ -17,5 +14,15 @@ class Demo {
         console.log(name);
     }
 }
+const map = new Map();
+map.set(name, 1);
+console.log(map);
+
+console.log(Object.assign({}, { name: "测试Object.assign" }));
+
+const testAsync = async function () {
+    await Promise.resolve().then(data => console.log(111));
+}
+testAsync();
 Promise.resolve("app").then(data => console.log(data));
 export default Demo;

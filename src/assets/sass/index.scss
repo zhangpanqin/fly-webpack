@@ -1,0 +1,11 @@
+%test-extends{
+    color:blue;
+}
+body{
+.test-scss{
+    @extend %test-extends;
+    font-size: 10px;
+    transform: scale(0.5);
+}
+}
+@import "./base";
